@@ -1,0 +1,46 @@
+---
+- name: Get Docker repo
+  get_url: 
+    url: https://download.docker.com/linux/centos/docker-ce.repo
+    dest: /etc/yum.repos.d/docker.repo
+
+- name: Install Docker-CE
+  yum:
+    name: docker-ce
+    state: latest
+    update_cache: yes
+
+- name: Add the user 'teligent' with a specific uid and a primary group of 'docker'
+  user:
+    name: teligent
+    group: docker
+
+- name: enable & start service docker
+  systemd:
+    name: docker
+    state: started
+    enabled: yes
+
+- name: enable & start service firewalld
+  systemd:
+    name: firewalld
+    state: started
+    enabled: yes
+
+- name: open ports on firewalld
+  firewalld:
+    port: "{{ item }}"
+    permanent: yes
+    state: enabled
+    immediate: yes
+  with_items:
+    - 2376/tcp
+    - 2377/tcp
+    - 7946/tcp
+    - 80/tcp
+    - 7946/tcp
+    - 4789/tcp
+
+- name: install docker libs
+  pip:
+    name: docker

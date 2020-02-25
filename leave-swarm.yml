@@ -1,0 +1,5 @@
+---
+- name: workers leave the swarm
+  hosts: swarm_workers
+  roles:
+    - { role: docker-swarm-leave, tags: swarm-leave }

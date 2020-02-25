@@ -1,0 +1,12 @@
+[swarm_managers]
+swarm-manager1 ansible_host="swarm-node1"
+
+[swarm_workers]
+swarm-worker1 ansible_host="swarm-node1"
+swarm-worker2 ansible_host="swarm-node2"
+swarm-worker3 ansible_host="swarm-node3"
+swarm-worker4 ansible_host="swarm-node4"
+
+[docker:children]
+swarm_managers
+swarm_workers

@@ -1,0 +1,5 @@
+---
+- name: Leave swarm for a node
+  docker_swarm:
+    state: absent
+    force: yes

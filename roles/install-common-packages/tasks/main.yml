@@ -1,0 +1,21 @@
+---
+- name: Add repository
+  yum_repository:
+    name: epel
+    description: EPEL YUM repo
+    baseurl: https://download.fedoraproject.org/pub/epel/$releasever/$basearch/
+
+- name: Install Packages
+  yum: 
+    name:
+      - ntp
+      - python
+      - python-pip
+      - tcpdump
+      - wget
+      - openssl
+      - curl
+      - mc
+      - htop
+    state: latest
+    update_cache: yes

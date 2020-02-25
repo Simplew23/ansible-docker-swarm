@@ -1,0 +1,38 @@
+---
+- name: Init a new swarm with default parameters
+  docker_swarm:
+    state: present
+    advertise_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+  run_once: true
+  register: cluster_init
+
+- name: Get the Manager join-token
+  shell: docker swarm join-token --quiet manager
+  register: manager_token
+
+- name: Get the worker join-token
+  shell: docker swarm join-token --quiet worker
+  register: worker_token
+
+- name: Display swarm manager_token
+  debug:
+    var: manager_token.stdout
+
+- name: Add manager nodes
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    join_token: manager_token.stdout_lines
+    remote_addrs: "{{ hostvars['swarm-manager1']['ansible_default_ipv4']['address'] }}:2377"
+
+- name: Display swarm worker_token
+  debug:
+    var: worker_token.stdout
+
+- name: Add worker nodes
+  docker_swarm:
+    state: join
+    advertise_addr: "{{ hostvars[inventory_hostname]['ansible_default_ipv4']['address'] }}"
+    join_token: worker_token.stdout
+    remote_addrs: "{{ hostvars['swarm-manager1']['ansible_default_ipv4']['address'] }}:2377"
+

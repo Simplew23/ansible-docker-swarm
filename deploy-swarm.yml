@@ -1,0 +1,19 @@
+---
+- name: setup pre-requisites
+  hosts: docker
+  become: yes
+  roles:
+    - { role: install-common-packages, tags: common }
+    - { role: configure-hosts, tags: hosts }
+
+- name: install docker
+  hosts: docker
+  become: yes
+  roles:
+    - { role: docker-installation, tags: docker-installation }
+
+- name: initialize docker swarm
+  hosts: swarm_managers
+  roles:
+    - { role: swarm-init, tags: swarm-init,swarm }
+

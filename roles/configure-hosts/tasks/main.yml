@@ -1,0 +1,10 @@
+---
+- name: create the hosts file for all machines
+  template: 
+   src: hosts.j2
+   dest: /etc/hosts
+
+- name: disable SELinux
+  selinux: 
+   state: disabled
+
