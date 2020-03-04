@@ -11,21 +11,21 @@ Swarm nodes in proxmox cluster:
 Deploy swarm
 
 ```
-ansible-playbook -i inventory -u teligent deploy-swarm.yml
+ansible-playbook -i inventory -u myuser deploy-swarm.yml
 ```
 
 Перезагрузка всех узлов:
 ```sh
-ansible all -i inventory -u teligent --become -a "/sbin/reboot"
+ansible all -i inventory -u myuser --become -a "/sbin/reboot"
 ```
 
 
 Проверка доступности узлов:
 ```sh
-ansible all -i inventory -u teligent --become -m ping
+ansible all -i inventory -u myuser --become -m ping
 ```
 
 Leave all nodes from swarm:
 ```sh
-ansible-playbook -i inventory -u teligent leave-swarm.yml
+ansible-playbook -i inventory -u myuser leave-swarm.yml
 ```

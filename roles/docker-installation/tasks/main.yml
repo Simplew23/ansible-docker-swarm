@@ -10,9 +10,9 @@
     state: latest
     update_cache: yes
 
-- name: Add the user 'teligent' with a specific uid and a primary group of 'docker'
+- name: Add the user 'myuser' with a specific uid and a primary group of 'docker'
   user:
-    name: teligent
+    name: myuser
     group: docker
 
 - name: enable & start service docker
